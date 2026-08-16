@@ -1,0 +1,52 @@
+# macOS
+.DS_Store
+
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+*.iml
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# iOS / Xcode
+*.xcuserstate
+*.xcuserdatad/
+xcuserdata/
+Pods/
+*.ipa
+*.dSYM.zip
+
+# Node / TypeScript
+node_modules/
+dist/
+*.tsbuildinfo
+
+# CDK
+cdk.out/
+.cdk.staging/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Secrets & local config — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.p8
+*.p12
+*.mobileprovision
+secrets.json
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs & coverage
+*.log
+coverage/
