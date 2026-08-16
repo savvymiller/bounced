@@ -1,0 +1,31 @@
+name: Bug report
+description: Something in TapID isn't working as designed
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you expected vs. what actually happened
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: e.g. apps/verifier_app, services/api, infra/terraform
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Logs, screenshots, device/OS version — whatever's relevant
+    validations:
+      required: false

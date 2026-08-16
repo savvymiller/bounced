@@ -1,0 +1,24 @@
+name: Feature request
+description: Propose a new capability or change in scope
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What's missing or painful today
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: false
+  - type: textarea
+    id: design-impact
+    attributes:
+      label: Design doc impact
+      description: Does this touch the outcome DTO, the retention posture, or the DynamoDB schema? If so, it needs a new ADR alongside the implementation.
+    validations:
+      required: false
