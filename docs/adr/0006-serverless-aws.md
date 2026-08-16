@@ -30,7 +30,11 @@ patterns are few and known in advance, and requests are independent and stateles
 - **DynamoDB Streams → EventBridge** for fan-out
 - **Kinesis Firehose → S3 (Parquet) → Athena** for analytics and compliance export
 - **AWS AppConfig** for the jurisdiction list, feature flags, and kill switches
-- **CDK (TypeScript)** for IaC
+- **Terraform (HCL)** for IaC, provisioning every resource above — no CDK, no
+  Ansible. There is no persistent compute anywhere in this architecture (no
+  VMs, no long-lived containers), so there is nothing for a configuration-
+  management tool like Ansible to manage; Terraform alone covers provisioning
+  end to end.
 - **Scheduled provisioned concurrency**, Thu–Sat 8pm–3am, on the ingest and
   authorizer Lambdas
 
@@ -107,3 +111,19 @@ export is a deliberate availability boundary ([`API.md`](../API.md#compliance-ex
 **AppSync/GraphQL.** Flexible for dashboard queries, but the hot path is a single
 batch-write endpoint that gains nothing from GraphQL, and it adds resolver
 complexity plus a second auth integration.
+
+**AWS CDK (TypeScript), for IaC specifically.** The appeal was sharing one
+language with the Lambda handlers, and higher-level constructs that generate
+IAM policies and bundle Lambda code automatically. Rejected in favor of
+Terraform: HCL is the more portable, more broadly held infra skill, and this
+stack (API Gateway, Lambda, DynamoDB, EventBridge, AppConfig) is well-trodden
+enough that mature Terraform modules cover it without CDK's abstractions being
+missed. The cost is more explicit wiring for Lambda packaging and IAM grants
+than CDK would give for free — accepted as a minor tax, not a real risk.
+
+**Ansible, for provisioning.** Ansible configures state on machines that stay
+running; this architecture has none — no VMs, no bastion hosts, no self-managed
+containers. Terraform alone provisions every resource in the system. If a
+future component genuinely needs persistent compute (unlikely given the design
+in [`ARCHITECTURE.md`](../ARCHITECTURE.md)), Ansible would be reconsidered for
+that component specifically, not adopted wholesale.

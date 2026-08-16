@@ -319,7 +319,7 @@ tapid/
 │   └── adr/                 decision records
 ├── apps/verifier_app/       Flutter app + native iOS verification module
 ├── services/api/            Lambda handlers (TypeScript)
-├── infra/cdk/               AWS CDK (TypeScript)
+├── infra/terraform/         Terraform (HCL)
 └── scripts/                 dev tooling
 ```
 

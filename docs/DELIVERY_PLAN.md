@@ -28,8 +28,8 @@ Buildable immediately. Nothing here waits on Apple.
 |---|---|---|---|---|
 | **01** | Design docs + repo scaffolding | M | — | This documentation set, `.gitignore`, `CODEOWNERS`, PR/issue templates. Docs only. |
 | **02** | CI pipeline skeleton | S | 01 | GitHub Actions: lint, format, typecheck, test jobs for Dart + TS. No app code yet — jobs are no-ops that pass. |
-| **03** | CDK bootstrap + environments | M | 02 | CDK app, `dev`/`staging`/`prod` env config, IAM bootstrap, no functional resources. Deploys an empty stack successfully. |
-| **04** | DynamoDB table construct | M | 03 | `tapid-main` table, 3 GSIs, TTL, Streams enabled, per [`DATA_MODEL.md`](DATA_MODEL.md). Includes a table-level unit test asserting key schema. |
+| **03** | Terraform bootstrap + environments | M | 02 | Root module, remote state (S3 backend + DynamoDB lock table), `dev`/`staging`/`prod` workspaces, IAM bootstrap, no functional resources. `terraform apply` succeeds on an empty stack. |
+| **04** | DynamoDB table module | M | 03 | `tapid-main` table, 3 GSIs, TTL, Streams enabled, per [`DATA_MODEL.md`](DATA_MODEL.md). Includes a `terraform plan` check asserting key schema in CI. |
 
 **Milestone A:** empty but real infrastructure deploying from CI to `dev`.
 

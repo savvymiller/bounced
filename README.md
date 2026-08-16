@@ -37,7 +37,7 @@ Decided deliberately; each is revisited in an ADR.
 
 - **Client:** Flutter, with a native Swift module for the tap ([ADR-0001](docs/adr/0001-flutter-plus-native-tap.md))
 - **Backend:** AWS — API Gateway, Lambda, DynamoDB, EventBridge, AppConfig ([ADR-0006](docs/adr/0006-serverless-aws.md))
-- **IaC:** CDK (TypeScript)
+- **IaC:** Terraform (HCL) — no Ansible; the backend is fully serverless, so there's no persistent compute for it to configure
 
 ## Three things to know before writing code
 
@@ -73,7 +73,7 @@ much a barcode rail would add and which states to prioritize
 docs/            architecture, design, ADRs   ← everything, currently
 apps/            Flutter app + native iOS module   (not yet created)
 services/api/    Lambda handlers                   (not yet created)
-infra/cdk/       AWS CDK                           (not yet created)
+infra/terraform/ Terraform                          (not yet created)
 ```
 
 ## Contributing

@@ -42,7 +42,7 @@ it is the harness the ISO 18013-5 or barcode rail would plug into instead.
 
 Goal: a demoable app and a real backend, with the mock rail.
 
-- Repo, CI, CDK bootstrap; DynamoDB table + IaC for the ingest path
+- Repo, CI, Terraform bootstrap; DynamoDB table + IaC for the ingest path
 - Flutter shell: auth, shift claim, door screen, history, settings
 - Native module scaffolding + Pigeon contract + `MockRail.swift`
 - Encrypted outbox (Drift + SQLCipher) and the sync loop
