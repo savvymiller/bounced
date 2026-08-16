@@ -15,6 +15,7 @@ contains architecture and planning documents only.
 | Document | What it covers |
 |---|---|
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | **Read first.** System design, components, flows, scale analysis |
+| [`docs/TECH_STACK.md`](docs/TECH_STACK.md) | Every technology in the project and why it was chosen |
 | [`docs/DELIVERY_PLAN.md`](docs/DELIVERY_PLAN.md) | 40-PR breakdown, dependency graph, parallel tracks |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Phasing, and the Apple entitlement critical path |
 | [`docs/DATA_MODEL.md`](docs/DATA_MODEL.md) | DynamoDB single-table design, access patterns |
