@@ -1,0 +1,103 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  client:
+    name: Client (Dart/Flutter)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for Flutter project
+        id: probe
+        run: |
+          if [ -f "apps/verifier_app/pubspec.yaml" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "No apps/verifier_app/pubspec.yaml yet — skeleton pass, nothing to check."
+          fi
+
+      - uses: subosito/flutter-action@v2
+        if: steps.probe.outputs.present == 'true'
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        if: steps.probe.outputs.present == 'true'
+        working-directory: apps/verifier_app
+        run: flutter pub get
+
+      - name: Format check
+        if: steps.probe.outputs.present == 'true'
+        working-directory: apps/verifier_app
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze (lint + typecheck)
+        if: steps.probe.outputs.present == 'true'
+        working-directory: apps/verifier_app
+        run: flutter analyze
+
+      - name: Test
+        if: steps.probe.outputs.present == 'true'
+        working-directory: apps/verifier_app
+        run: flutter test
+
+  backend:
+    name: Backend (TypeScript)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for Node project
+        id: probe
+        run: |
+          if [ -f "services/api/package.json" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "No services/api/package.json yet — skeleton pass, nothing to check."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.probe.outputs.present == 'true'
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: services/api/package-lock.json
+
+      - name: Install dependencies
+        if: steps.probe.outputs.present == 'true'
+        working-directory: services/api
+        run: npm ci
+
+      # Expects services/api/package.json to define these four scripts once
+      # the Lambda handlers land (PR-21 onward): format:check, lint,
+      # typecheck, test.
+      - name: Format check
+        if: steps.probe.outputs.present == 'true'
+        working-directory: services/api
+        run: npm run format:check
+
+      - name: Lint
+        if: steps.probe.outputs.present == 'true'
+        working-directory: services/api
+        run: npm run lint
+
+      - name: Typecheck
+        if: steps.probe.outputs.present == 'true'
+        working-directory: services/api
+        run: npm run typecheck
+
+      - name: Test
+        if: steps.probe.outputs.present == 'true'
+        working-directory: services/api
+        run: npm test
