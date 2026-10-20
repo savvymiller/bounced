@@ -50,3 +50,20 @@ secrets.json
 # Logs & coverage
 *.log
 coverage/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+# Per-environment backend config: contains the account-specific state
+# bucket name, generated once from bootstrap's output. See
+# infra/terraform/README.md.
+backend.hcl
+# .terraform.lock.hcl is intentionally NOT ignored — it pins provider
+# versions and should be committed.
