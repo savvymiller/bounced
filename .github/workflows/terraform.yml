@@ -1,0 +1,70 @@
+name: Terraform
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "infra/terraform/**"
+      - ".github/workflows/terraform.yml"
+  pull_request:
+    paths:
+      - "infra/terraform/**"
+      - ".github/workflows/terraform.yml"
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TF_IN_AUTOMATION: "true"
+
+jobs:
+  fmt:
+    name: Format check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+      - run: terraform fmt -check -recursive -diff infra/terraform
+
+  # Validates every root module (bootstrap + each environment) with no
+  # backend and no AWS credentials — this only checks the config is
+  # internally consistent, it never talks to AWS.
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        root:
+          - infra/terraform/bootstrap
+          - infra/terraform/environments/dev
+          - infra/terraform/environments/staging
+          - infra/terraform/environments/prod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+      - working-directory: ${{ matrix.root }}
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate
+
+  # Module tests via Terraform's native test framework, using
+  # mock_provider — fully offline, no AWS credentials required. This is
+  # the "terraform plan check asserting key schema" from
+  # docs/DELIVERY_PLAN.md PR-04, e.g. infra/terraform/modules/dynamodb-table/tests.
+  test:
+    name: Module tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+      - working-directory: infra/terraform/modules/dynamodb-table
+        run: |
+          terraform init -input=false
+          terraform test
