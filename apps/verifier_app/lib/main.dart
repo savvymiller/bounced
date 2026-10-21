@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-/// Placeholder entrypoint. PR-08 adds the real app shell (DI, routing,
-/// theming) — this file deliberately has nothing to do with the
-/// verification rail added in this PR.
-void main() {
-  runApp(const _Placeholder());
-}
+import 'app/app_shell.dart';
+import 'rails/mock_rail.dart';
 
-class _Placeholder extends StatelessWidget {
-  const _Placeholder();
-
-  @override
-  Widget build(BuildContext context) => const MaterialApp(home: Scaffold());
+/// The composition root. MockRail is the only VerificationRail that exists
+/// today (ADR-0002) — AppleWalletRail arrives in PR-30, gated on Apple's
+/// entitlement. Which rail gets constructed here is expected to become a
+/// build-time/config decision once that exists; for now there is only one
+/// real choice to make.
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final rail = await MockRail.fromAsset(
+    'assets/fixtures/mock_rail_default.json',
+  );
+  runApp(AppShell(rail: rail));
 }
