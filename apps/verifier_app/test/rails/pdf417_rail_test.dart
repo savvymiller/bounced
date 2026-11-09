@@ -38,9 +38,7 @@ class _Pdf417RailHarness implements VerificationRailTestHarness {
     _queue.add(() => _produce(scenario));
   }
 
-  Future<String?> _produce(
-    contract.VerificationRailScenario scenario,
-  ) async {
+  Future<String?> _produce(contract.VerificationRailScenario scenario) async {
     await Future<void>.delayed(scenario.latency);
     return switch (scenario.result) {
       RailResult.cancelled => null,

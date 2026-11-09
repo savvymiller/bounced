@@ -10,8 +10,11 @@ import 'app_router.dart';
 /// the [VerificationRail] — an API client arrives next), routing, and
 /// theming. No feature screens live here.
 class AppShell extends StatelessWidget {
-  AppShell({super.key, required this.rail, GlobalKey<NavigatorState>? navigatorKey})
-    : _router = buildAppRouter(navigatorKey: navigatorKey);
+  AppShell({
+    super.key,
+    required this.rail,
+    GlobalKey<NavigatorState>? navigatorKey,
+  }) : _router = buildAppRouter(navigatorKey: navigatorKey);
 
   final VerificationRail rail;
   final GoRouter _router;

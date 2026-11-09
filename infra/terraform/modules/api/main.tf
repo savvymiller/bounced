@@ -57,8 +57,8 @@ resource "aws_lambda_function" "api" {
 
   environment {
     variables = {
-      TABLE_NAME      = var.table_name
-      DEMO_API_TOKEN  = var.demo_api_token
+      TABLE_NAME     = var.table_name
+      DEMO_API_TOKEN = var.demo_api_token
     }
   }
 }

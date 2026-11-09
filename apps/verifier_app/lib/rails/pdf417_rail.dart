@@ -15,9 +15,11 @@ import 'verification_rail.dart';
 /// `test/rails/pdf417_rail_test.dart` does exactly that. [Pdf417Rail.live]
 /// wires the real camera for production.
 class Pdf417Rail implements VerificationRail {
-  Pdf417Rail({required Future<String?> Function() scan, DateTime Function() now = DateTime.now})
-    : _scan = scan,
-      _now = now;
+  Pdf417Rail({
+    required Future<String?> Function() scan,
+    DateTime Function() now = DateTime.now,
+  }) : _scan = scan,
+       _now = now;
 
   /// Pushes [BarcodeScanScreen] on the app's root navigator and resolves
   /// with whatever it pops — the raw barcode payload, or null on cancel.
