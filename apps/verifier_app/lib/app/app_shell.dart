@@ -7,9 +7,8 @@ import '../theming/app_theme.dart';
 import 'app_router.dart';
 
 /// The composition root's widget: wires dependency injection (today, just
-/// the [VerificationRail] — more arrive as later PRs add an API client,
-/// local storage, etc.), routing, and theming. No feature screens live
-/// here; see docs/DELIVERY_PLAN.md's PR-08 scope.
+/// the [VerificationRail] — an API client arrives next), routing, and
+/// theming. No feature screens live here.
 class AppShell extends StatelessWidget {
   AppShell({super.key, required this.rail, GlobalKey<NavigatorState>? navigatorKey})
     : _router = buildAppRouter(navigatorKey: navigatorKey);

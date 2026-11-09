@@ -3,13 +3,13 @@
 /// barcodes use this format, so this works against real cards, not just
 /// fixtures.
 ///
-/// Deliberately narrow (ADR-0008): extracts only what the door needs (date
-/// of birth, expiration, issuing state) via regex on the well-known
-/// three-letter element codes, rather than walking the subfile offset
-/// table — real-world lightweight AAMVA readers do this too, since it is
-/// robust to the header/version differences between states' encoders. Never
-/// extracts name, address, or document number — that data never needs to
-/// exist in this process at all.
+/// Deliberately narrow: extracts only what the door needs (date of birth,
+/// expiration, issuing state) via regex on the well-known three-letter
+/// element codes, rather than walking the subfile offset table —
+/// real-world lightweight AAMVA readers do this too, since it is robust to
+/// the header/version differences between states' encoders. Never extracts
+/// name, address, or document number — that data never needs to exist in
+/// this process at all.
 library;
 
 sealed class AamvaResult {

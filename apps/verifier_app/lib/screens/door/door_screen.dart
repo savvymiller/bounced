@@ -8,10 +8,9 @@ import 'door_screen_state.dart';
 import 'human_decision.dart';
 import 'outcome_card.dart';
 
-/// First visible product (docs/DELIVERY_PLAN.md PR-09): one big button,
-/// backed by whatever [VerificationRail] the app shell injected —
-/// `Pdf417Rail` in production (ADR-0008), `MockRail` in tests (ADR-0002).
-/// This screen doesn't know or care which.
+/// One big button, backed by whatever [VerificationRail] the app shell
+/// injected — `Pdf417Rail` in production, `MockRail` in tests. This screen
+/// doesn't know or care which.
 class DoorScreen extends StatefulWidget {
   const DoorScreen({super.key});
 

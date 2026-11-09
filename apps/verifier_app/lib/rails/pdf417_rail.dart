@@ -6,8 +6,8 @@ import 'verification_outcome.dart';
 import 'verification_rail.dart';
 
 /// Reads the PDF417 barcode on the back of a physical ID via the device
-/// camera. No Apple entitlement required — see ADR-0008, which replaces
-/// the unbuilt `AppleWalletRail` with this rail for v1.
+/// camera. No Apple entitlement required, unlike the ProximityReader-based
+/// rail this replaced before it was ever built.
 ///
 /// Mirrors [MockRail]'s shape: [scan] and [now] are injectable so the
 /// decision logic (age math, expiration, issuer support) is fully

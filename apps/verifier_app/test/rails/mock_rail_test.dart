@@ -27,8 +27,7 @@ class _MockRailHarness implements VerificationRailTestHarness {
 }
 
 void main() {
-  // MockRail is the first real implementation to run the shared contract
-  // suite against — the whole point of ADR-0002.
+  // MockRail runs the same shared contract suite real rails do.
   runVerificationRailContractTests(() => _MockRailHarness());
 
   group('checkNotReleaseBuild', () {

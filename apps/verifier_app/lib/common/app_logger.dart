@@ -4,12 +4,12 @@ enum LogLevel { debug, info, warn, error }
 
 /// One structured log line. [fields] is encouraged over string
 /// interpolation so a future log sink (CloudWatch, eventually) can filter
-/// on specific keys — see docs/THREAT_MODEL.md#t4-pii-leakage-via-client-logs.
+/// on specific keys.
 ///
 /// This logger does not enforce a field allowlist itself; the actual
-/// PII guarantee for tap data lives one layer down, in VerificationOutcome's
-/// restricted field set (ADR-0001) — logging that type is safe by
-/// construction, not because this logger checks anything.
+/// PII guarantee for verification data lives one layer down, in
+/// VerificationOutcome's restricted field set — logging that type is safe
+/// by construction, not because this logger checks anything.
 class LogRecord {
   const LogRecord({
     required this.level,

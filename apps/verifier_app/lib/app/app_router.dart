@@ -7,9 +7,9 @@ import '../screens/door/door_screen.dart';
 /// with a single route, so later screens (shift claim, settings, history)
 /// are additive route entries rather than a routing-framework migration.
 ///
-/// [navigatorKey] is exposed so [Pdf417Rail.live] (ADR-0008) can push its
-/// full-screen camera UI onto the same root navigator go_router manages,
-/// without the door screen or router needing a route for it.
+/// [navigatorKey] is exposed so [Pdf417Rail.live] can push its full-screen
+/// camera UI onto the same root navigator go_router manages, without the
+/// door screen or router needing a route for it.
 GoRouter buildAppRouter({GlobalKey<NavigatorState>? navigatorKey}) {
   return GoRouter(
     navigatorKey: navigatorKey,

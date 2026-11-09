@@ -1,6 +1,6 @@
 // Proves the shared contract suite (test/support/verification_rail_contract.dart)
-// is itself runnable and correct, ahead of PR-07's MockRail — per ADR-0002,
-// the suite is written before any implementation exists.
+// is itself runnable and correct, independent of any real rail
+// implementation.
 //
 // `_StubRail` below is throwaway scaffolding for this file only. It is not
 // MockRail: it has no fixture file, no release-build compile guard, and

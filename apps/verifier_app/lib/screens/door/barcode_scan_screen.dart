@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-/// Full-screen camera scan UI backing [Pdf417Rail.live] (ADR-0008). Pops
-/// with the first decoded barcode's raw payload, or null if the attendant
-/// cancels. This is the rail's own internal UI mechanics — the door screen
-/// never sees this; it only ever calls `beginVerification()`.
+/// Full-screen camera scan UI backing [Pdf417Rail.live]. Pops with the
+/// first decoded barcode's raw payload, or null if the attendant cancels.
+/// This is the rail's own internal UI mechanics — the door screen never
+/// sees this; it only ever calls `beginVerification()`.
 class BarcodeScanScreen extends StatefulWidget {
   const BarcodeScanScreen({super.key});
 

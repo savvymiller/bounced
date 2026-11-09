@@ -7,12 +7,10 @@ import 'verification_rail_harness.dart';
 import 'verification_rail_scenario.dart';
 
 /// The suite every [VerificationRail] implementation must pass, identically
-/// — `MockRail` (PR-07) today, `AppleWalletRail` (PR-30) once Apple approves
-/// this project, and any future rail (barcode, ISO 18013-5) after that. Per
-/// ADR-0002, this is written before any implementation exists; a
+/// — `MockRail` and `Pdf417Rail` today, any future rail after that. A
 /// self-test against a throwaway in-memory stub
 /// (test/rails/verification_rail_contract_selftest_test.dart) proves the
-/// suite itself is runnable and correct ahead of PR-07.
+/// suite itself is runnable and correct independent of any real rail.
 ///
 /// Call this from a rail's own `*_test.dart` file:
 ///
@@ -42,8 +40,7 @@ void runVerificationRailContractTests(
           expect(outcome.issuingJurisdiction, scenario.issuingJurisdiction);
           expect(outcome.eventId, isNotEmpty);
           // Generous tolerance: this proves latency is plumbed through at
-          // all, not that a rail hits a precise figure — real-device
-          // latency tuning is PR-33, not a contract-suite concern.
+          // all, not that a rail hits a precise figure.
           expect(
             outcome.readLatency.inMilliseconds,
             closeTo(scenario.latency.inMilliseconds, 250),
