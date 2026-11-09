@@ -41,6 +41,7 @@ venv/
 *.p12
 *.mobileprovision
 secrets.json
+*.auto.tfvars
 
 # Local databases
 *.db
@@ -67,3 +68,6 @@ override.tf.json
 backend.hcl
 # .terraform.lock.hcl is intentionally NOT ignored — it pins provider
 # versions and should be committed.
+tfplan
+*.tfplan
+**/.build/

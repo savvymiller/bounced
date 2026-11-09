@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:verifier_app/rails/verification_outcome.dart';
 import 'package:verifier_app/rails/verification_rail.dart';
 
-/// Not MockRail (PR-07) — just enough to prove the interface is coarse
-/// enough to implement with the two calls ADR-0007 describes.
+/// Not MockRail — just enough to prove the interface is coarse enough to
+/// implement with its two calls.
 class _FakeRail implements VerificationRail {
   @override
   Future<bool> isAvailable() async => true;

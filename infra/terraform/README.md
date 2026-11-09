@@ -1,8 +1,7 @@
 # Infrastructure — Terraform
 
-See [ADR-0006](../../docs/adr/0006-serverless-aws.md) for why Terraform, and
-[`docs/DELIVERY_PLAN.md`](../../docs/DELIVERY_PLAN.md) (Track A) for how this
-is sequenced.
+Fully serverless (API Gateway, Lambda, DynamoDB) — no persistent compute to
+configure outside this.
 
 ```
 bootstrap/        One-time per AWS account. Creates the S3 state bucket,

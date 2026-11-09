@@ -9,3 +9,7 @@ output "dynamodb_table_arn" {
 output "dynamodb_stream_arn" {
   value = module.dynamodb_table.stream_arn
 }
+
+output "api_endpoint" {
+  value = module.api.api_endpoint
+}

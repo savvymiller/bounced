@@ -29,9 +29,9 @@ void main() {
       );
 
       await tester.pumpWidget(_wrap(rail));
-      expect(find.text('Tap to Verify'), findsOneWidget);
+      expect(find.text('Scan ID'), findsOneWidget);
 
-      await tester.tap(find.text('Tap to Verify'));
+      await tester.tap(find.text('Scan ID'));
       await tester.pump();
       expect(find.text('Verifying…'), findsOneWidget);
 
@@ -48,7 +48,7 @@ void main() {
       await tester.tap(find.text('Next patron'));
       await tester.pump();
 
-      expect(find.text('Tap to Verify'), findsOneWidget);
+      expect(find.text('Scan ID'), findsOneWidget);
     },
   );
 
@@ -66,7 +66,7 @@ void main() {
     );
 
     await tester.pumpWidget(_wrap(rail));
-    await tester.tap(find.text('Tap to Verify'));
+    await tester.tap(find.text('Scan ID'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Refuse entry'));
@@ -85,7 +85,7 @@ void main() {
     final rail = MockRail(); // nothing scripted, autoLoop false -> beginVerification() throws
 
     await tester.pumpWidget(_wrap(rail));
-    await tester.tap(find.text('Tap to Verify'));
+    await tester.tap(find.text('Scan ID'));
     await tester.pumpAndSettle();
 
     expect(find.textContaining('Verification failed'), findsOneWidget);
@@ -93,6 +93,6 @@ void main() {
 
     await tester.tap(find.text('Retry'));
     await tester.pump();
-    expect(find.text('Tap to Verify'), findsOneWidget);
+    expect(find.text('Scan ID'), findsOneWidget);
   });
 }

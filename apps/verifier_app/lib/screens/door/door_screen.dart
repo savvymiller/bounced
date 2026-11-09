@@ -8,10 +8,9 @@ import 'door_screen_state.dart';
 import 'human_decision.dart';
 import 'outcome_card.dart';
 
-/// First visible product (docs/DELIVERY_PLAN.md PR-09): one big button,
-/// backed by whatever [VerificationRail] the app shell injected —
-/// `MockRail` today (ADR-0002), `AppleWalletRail` once PR-30 lands. This
-/// screen doesn't know or care which.
+/// One big button, backed by whatever [VerificationRail] the app shell
+/// injected — `Pdf417Rail` in production, `MockRail` in tests. This screen
+/// doesn't know or care which.
 class DoorScreen extends StatefulWidget {
   const DoorScreen({super.key});
 
@@ -79,8 +78,8 @@ class _DoorScreenState extends State<DoorScreen> {
   Widget _buildIdle() {
     return ElevatedButton.icon(
       onPressed: _beginVerification,
-      icon: const Icon(Icons.wifi, size: 32),
-      label: const Text('Tap to Verify'),
+      icon: const Icon(Icons.qr_code_scanner, size: 32),
+      label: const Text('Scan ID'),
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 32),
         textStyle: const TextStyle(fontSize: 24),

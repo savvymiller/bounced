@@ -7,11 +7,9 @@ import 'mock_scenario.dart';
 import 'verification_outcome.dart';
 import 'verification_rail.dart';
 
-/// Checks the one condition that must hold unconditionally, regardless of
-/// any server flag: a release binary must never contain a reachable
-/// `MockRail`. Per ADR-0002, this is "belt and braces" alongside the
-/// `mockRailAllowed` server flag (PR-23) — a venue must never be able to
-/// fabricate an approval by reaching the mock.
+/// Checks the one condition that must hold unconditionally: a release
+/// binary must never contain a reachable `MockRail` — nothing should be
+/// able to fabricate an approval by reaching the mock.
 ///
 /// [isReleaseMode] defaults to the real [kReleaseMode] compile-time
 /// constant; the parameter exists only so this predicate's logic can be
@@ -21,17 +19,16 @@ import 'verification_rail.dart';
 void checkNotReleaseBuild({bool isReleaseMode = kReleaseMode}) {
   if (isReleaseMode) {
     throw UnsupportedError(
-      'MockRail must never run in a release build (ADR-0002). This check is '
-      'unconditional — it does not depend on mockRailAllowed or any other '
-      'flag being configured correctly.',
+      'MockRail must never run in a release build. This check is '
+      'unconditional — it does not depend on any flag being configured '
+      'correctly.',
     );
   }
 }
 
 /// A first-class, contract-tested implementation of [VerificationRail] —
-/// not throwaway scaffolding (ADR-0002). This is what every screen, the
-/// outbox, and the sync engine are built and demoed against until Apple's
-/// ID Verifier entitlement is granted (ADR-0006, ROADMAP.md critical path).
+/// not throwaway scaffolding. This is what every screen is built and
+/// tested against, alongside the real `Pdf417Rail`.
 ///
 /// Behavior: [beginVerification] dequeues and returns the next scripted
 /// [MockScenario], in order, simulating its latency. Two ways to supply

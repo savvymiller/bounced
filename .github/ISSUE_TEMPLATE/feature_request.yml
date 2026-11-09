@@ -15,10 +15,3 @@ body:
       label: Proposed solution
     validations:
       required: false
-  - type: textarea
-    id: design-impact
-    attributes:
-      label: Design doc impact
-      description: Does this touch the outcome DTO, the retention posture, or the DynamoDB schema? If so, it needs a new ADR alongside the implementation.
-    validations:
-      required: false

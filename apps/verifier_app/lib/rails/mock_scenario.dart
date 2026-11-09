@@ -75,9 +75,8 @@ class MockScenario {
   }
 }
 
-/// A named, ordered script of [MockScenario]s — what ADR-0002 calls a
-/// "fixture file", meant to be hand-editable by QA/demos without touching
-/// Dart.
+/// A named, ordered script of [MockScenario]s — a "fixture file", meant to
+/// be hand-editable for demos without touching Dart.
 class MockRailFixture {
   const MockRailFixture(this.script);
 

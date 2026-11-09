@@ -14,7 +14,7 @@ void main() {
     await tester.pumpWidget(AppShell(rail: rail));
     await tester.pumpAndSettle();
 
-    expect(find.text('Tap to Verify'), findsOneWidget);
+    expect(find.text('Scan ID'), findsOneWidget);
 
     final context = tester.element(find.byType(DoorScreen));
     expect(Provider.of<VerificationRail>(context, listen: false), same(rail));

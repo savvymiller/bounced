@@ -1,0 +1,11 @@
+{
+  "name": "tapid-api-lambda",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Demo ingest API for TapID — GET /v1/config, POST /v1/shifts, POST /v1/events. Simplified static-bearer-token auth, not Cognito/App Attest.",
+  "main": "handler.js",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.700.0",
+    "@aws-sdk/util-dynamodb": "^3.700.0"
+  }
+}

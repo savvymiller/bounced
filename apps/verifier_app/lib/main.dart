@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'app/app_shell.dart';
-import 'rails/mock_rail.dart';
+import 'rails/pdf417_rail.dart';
 
-/// The composition root. MockRail is the only VerificationRail that exists
-/// today (ADR-0002) — AppleWalletRail arrives in PR-30, gated on Apple's
-/// entitlement. Which rail gets constructed here is expected to become a
-/// build-time/config decision once that exists; for now there is only one
-/// real choice to make.
+/// The composition root. `Pdf417Rail` is the production rail — it reads the
+/// barcode on the back of a physical ID via the device camera, needing no
+/// Apple entitlement. `MockRail` remains available for widget tests and the
+/// contract suite; it is no longer constructed here.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final rail = await MockRail.fromAsset(
-    'assets/fixtures/mock_rail_default.json',
-  );
-  runApp(AppShell(rail: rail));
+  final navigatorKey = GlobalKey<NavigatorState>();
+  final rail = Pdf417Rail.live(navigatorKey: navigatorKey);
+  runApp(AppShell(rail: rail, navigatorKey: navigatorKey));
 }

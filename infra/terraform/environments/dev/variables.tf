@@ -15,3 +15,9 @@ variable "project" {
   type        = string
   default     = "tapid"
 }
+
+variable "demo_api_token" {
+  description = "Static bearer token the demo Flutter client authenticates with. Not a production credential — see infra/terraform/modules/api/variables.tf."
+  type        = string
+  sensitive   = true
+}

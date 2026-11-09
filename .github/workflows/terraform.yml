@@ -53,9 +53,8 @@ jobs:
           terraform validate
 
   # Module tests via Terraform's native test framework, using
-  # mock_provider — fully offline, no AWS credentials required. This is
-  # the "terraform plan check asserting key schema" from
-  # docs/DELIVERY_PLAN.md PR-04, e.g. infra/terraform/modules/dynamodb-table/tests.
+  # mock_provider — fully offline, no AWS credentials required, e.g.
+  # infra/terraform/modules/dynamodb-table/tests.
   test:
     name: Module tests
     runs-on: ubuntu-latest

@@ -2,17 +2,17 @@ import 'package:verifier_app/rails/verification_outcome.dart';
 
 /// A scripted outcome for a [VerificationRailTestHarness] to produce.
 ///
-/// This is the single source of truth for what each of the six outcomes in
-/// docs/DATA_MODEL.md's `railResult` enum looks like — the contract suite
-/// re-validates that a harness, when told to produce [approved], actually
-/// returns an outcome shaped like [approved]. Business rule encoded here:
-/// `ageAtLeast21` is only non-null when a credential was actually read and
-/// cryptographically age-checked (approved/declined); it's null whenever the
-/// rail never got that far. `issuingJurisdiction` follows the same rule,
-/// except it's left deliberately unconstrained for `expired` and
-/// `unsupportedIssuer` — the docs don't pin down whether the rail learns the
-/// state before or after discovering those conditions, so this is modeled
-/// as a known gray zone rather than a guessed rule.
+/// This is the single source of truth for what each of the six
+/// [RailResult] cases looks like — the contract suite re-validates that a
+/// harness, when told to produce [approved], actually returns an outcome
+/// shaped like [approved]. Business rule encoded here: `ageAtLeast21` is
+/// only non-null when a credential was actually read and age-checked
+/// (approved/declined); it's null whenever the rail never got that far.
+/// `issuingJurisdiction` follows the same rule, except it's left
+/// deliberately unconstrained for `expired` and `unsupportedIssuer` — a
+/// rail may or may not learn the state before discovering those
+/// conditions, so this is modeled as a known gray zone rather than a
+/// guessed rule.
 class VerificationRailScenario {
   const VerificationRailScenario._({
     required this.result,
