@@ -18,8 +18,8 @@ class Pdf417Rail implements VerificationRail {
   Pdf417Rail({
     required Future<String?> Function() scan,
     DateTime Function() now = DateTime.now,
-  }) : _scan = scan,
-       _now = now;
+  }) : _performScan = scan,
+       _clock = now;
 
   /// Pushes [BarcodeScanScreen] on the app's root navigator and resolves
   /// with whatever it pops — the raw barcode payload, or null on cancel.
@@ -31,8 +31,8 @@ class Pdf417Rail implements VerificationRail {
     );
   }
 
-  final Future<String?> Function() _scan;
-  final DateTime Function() _now;
+  final Future<String?> Function() _performScan;
+  final DateTime Function() _clock;
   int _counter = 0;
 
   @override
@@ -41,11 +41,11 @@ class Pdf417Rail implements VerificationRail {
   @override
   Future<VerificationOutcome> beginVerification() async {
     final started = DateTime.now();
-    final raw = await _scan();
+    final raw = await _performScan();
     final readLatency = DateTime.now().difference(started);
     final eventId =
         'pdf417_${DateTime.now().microsecondsSinceEpoch}_${_counter++}';
-    final occurredAt = _now().toUtc();
+    final occurredAt = _clock().toUtc();
 
     if (raw == null) {
       return VerificationOutcome(
@@ -95,7 +95,7 @@ class Pdf417Rail implements VerificationRail {
     required DateTime occurredAt,
     required Duration readLatency,
   }) {
-    final now = _now();
+    final now = _clock();
     if (expiration.isBefore(now)) {
       return VerificationOutcome(
         eventId: eventId,
