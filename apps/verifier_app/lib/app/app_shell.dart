@@ -11,7 +11,8 @@ import 'app_router.dart';
 /// local storage, etc.), routing, and theming. No feature screens live
 /// here; see docs/DELIVERY_PLAN.md's PR-08 scope.
 class AppShell extends StatelessWidget {
-  AppShell({super.key, required this.rail}) : _router = buildAppRouter();
+  AppShell({super.key, required this.rail, GlobalKey<NavigatorState>? navigatorKey})
+    : _router = buildAppRouter(navigatorKey: navigatorKey);
 
   final VerificationRail rail;
   final GoRouter _router;
