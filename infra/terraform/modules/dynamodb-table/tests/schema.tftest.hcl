@@ -1,11 +1,8 @@
-# Asserts the table's key schema matches docs/DATA_MODEL.md. Runs fully
-# offline via mock_provider (Terraform >= 1.7) — no AWS credentials, no
-# real API calls, safe to run in CI on every PR.
+# Asserts the table's key schema. Runs fully offline via mock_provider
+# (Terraform >= 1.7) — no AWS credentials, no real API calls, safe to run
+# in CI on every PR.
 #
 #   terraform test
-#
-# This is the "terraform plan check asserting key schema in CI" called
-# for by PR-04 in docs/DELIVERY_PLAN.md.
 
 mock_provider "aws" {}
 
@@ -19,17 +16,17 @@ run "primary_key_matches_data_model" {
 
   assert {
     condition     = aws_dynamodb_table.main.hash_key == "PK"
-    error_message = "Table hash key must be PK (docs/DATA_MODEL.md)"
+    error_message = "Table hash key must be PK"
   }
 
   assert {
     condition     = aws_dynamodb_table.main.range_key == "SK"
-    error_message = "Table range key must be SK (docs/DATA_MODEL.md)"
+    error_message = "Table range key must be SK"
   }
 
   assert {
     condition     = aws_dynamodb_table.main.billing_mode == "PAY_PER_REQUEST"
-    error_message = "Billing mode must be on-demand per ADR-0006"
+    error_message = "Billing mode must be on-demand"
   }
 }
 
@@ -48,7 +45,7 @@ run "ttl_and_streams_enabled" {
 
   assert {
     condition     = aws_dynamodb_table.main.stream_enabled == true
-    error_message = "Streams must be enabled to feed the rollup consumer (PR-25)"
+    error_message = "Streams must be enabled to feed a future rollup consumer"
   }
 }
 

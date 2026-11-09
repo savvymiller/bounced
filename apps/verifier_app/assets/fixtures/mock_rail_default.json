@@ -1,5 +1,5 @@
 {
-  "_comment": "Default MockRail demo script (ADR-0002). Loaded via MockRail.fromAsset and looped indefinitely. Hand-editable — no Dart changes needed to script a different demo sequence. result must be one of: approved, declined, expired, unsupportedIssuer, readFailed, cancelled.",
+  "_comment": "Default MockRail demo script. Loaded via MockRail.fromAsset and looped indefinitely. Hand-editable — no Dart changes needed to script a different demo sequence. result must be one of: approved, declined, expired, unsupportedIssuer, readFailed, cancelled.",
   "script": [
     { "result": "approved", "ageAtLeast21": true, "issuingJurisdiction": "CA", "latencyMs": 1800 },
     { "result": "approved", "ageAtLeast21": true, "issuingJurisdiction": "NY", "latencyMs": 1600 },

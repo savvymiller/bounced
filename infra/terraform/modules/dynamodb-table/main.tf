@@ -1,13 +1,11 @@
-# tapid-main — single-table design. See docs/DATA_MODEL.md for the full
-# key design, item shapes, and access patterns this schema serves.
+# tapid-main — single-table design.
 #
 # The defining property of this table: there is no column for PII (no
-# name, DOB, portrait, or document ID). Adding one requires a new ADR
-# per docs/adr/0003-zero-retention.md, enforced in CI by PR-24.
+# name, DOB, portrait, or document ID).
 
 resource "aws_dynamodb_table" "main" {
   name         = "${var.project}-main-${var.environment}"
-  billing_mode = "PAY_PER_REQUEST" # ADR-0006: traffic is ~28x peak/average; on-demand tracks usage, not peak.
+  billing_mode = "PAY_PER_REQUEST" # Traffic is spiky; on-demand tracks usage, not peak.
 
   hash_key  = "PK"
   range_key = "SK"
@@ -72,14 +70,14 @@ resource "aws_dynamodb_table" "main" {
     projection_type = "ALL"
   }
 
-  # 90-day operational hot window (DATA_MODEL.md "Retention and
-  # lifecycle"). S3/Athena is the multi-year archive — see PR-26.
+  # 90-day operational hot window; a future archive tier would be
+  # multi-year.
   ttl {
     attribute_name = "ttl"
     enabled        = true
   }
 
-  # Feeds the rollup consumer (PR-25) and, later, EventBridge fan-out.
+  # Feeds a future rollup consumer and, later, EventBridge fan-out.
   # NEW_AND_OLD_IMAGES rather than NEW_IMAGE: Device/Shift items are
   # updated in place (status, endedAt), and a future consumer diffing
   # those needs the prior value — cheap to keep both now rather than
@@ -98,6 +96,6 @@ resource "aws_dynamodb_table" "main" {
   deletion_protection_enabled = var.deletion_protection_enabled
 
   tags = {
-    DataClassification = "zero-pii" # ADR-0003
+    DataClassification = "zero-pii"
   }
 }

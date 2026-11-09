@@ -24,12 +24,7 @@ variable "lambda_source_dir" {
 }
 
 variable "demo_api_token" {
-  description = <<-EOT
-    Static bearer token the demo client authenticates with. Stands in for
-    the App Attest + Cognito device auth in docs/API.md, which needs a real
-    enrolled device and is out of scope until the Apple entitlement lands
-    (docs/DELIVERY_PLAN.md Track D/F). Not a production credential.
-  EOT
+  description = "Static bearer token the demo client authenticates with. Not a production credential."
   type        = string
   sensitive   = true
 }

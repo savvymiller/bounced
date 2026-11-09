@@ -16,7 +16,7 @@ variable "deletion_protection_enabled" {
 }
 
 variable "point_in_time_recovery" {
-  description = "Enable continuous backups (PITR). This is the audit-record table (docs/DATA_MODEL.md) — keep true outside of short-lived dev stacks."
+  description = "Enable continuous backups (PITR). Keep true outside of short-lived dev stacks."
   type        = bool
   default     = true
 }

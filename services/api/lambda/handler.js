@@ -4,11 +4,9 @@ const { DynamoDBClient, PutItemCommand } = require('@aws-sdk/client-dynamodb');
 const { marshall } = require('@aws-sdk/util-dynamodb');
 const crypto = require('crypto');
 
-// Demo API, not the full system in docs/API.md. Real device auth there is
-// App Attest + Cognito (docs/DELIVERY_PLAN.md Track D), which needs an
-// enrolled physical device and is out of scope while the Apple entitlement
-// is pending. This swaps that for one static bearer token so the client
-// can still demonstrate a real network round trip.
+// Demo API: a static bearer token stands in for real device auth
+// (App Attest + Cognito), so the client can demonstrate a real network
+// round trip without an enrolled physical device.
 const DEMO_TOKEN = process.env.DEMO_API_TOKEN;
 const TABLE_NAME = process.env.TABLE_NAME;
 const ORG_ID = 'org_demo';
@@ -17,7 +15,7 @@ const DEVICE_ID = 'dev_demo';
 
 const ddb = new DynamoDBClient({});
 
-// One hardcoded roster, standing in for PR-19's shift-claim endpoint.
+// One hardcoded roster, standing in for a real shift-claim endpoint.
 const STAFF_BY_PIN = {
   '1234': { staffId: 'stf_alex', name: 'Alex' },
   '5678': { staffId: 'stf_jordan', name: 'Jordan' },

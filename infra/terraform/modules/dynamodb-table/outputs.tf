@@ -7,6 +7,6 @@ output "table_arn" {
 }
 
 output "stream_arn" {
-  description = "DynamoDB Streams ARN, for the rollup consumer (PR-25) and future EventBridge pipe."
+  description = "DynamoDB Streams ARN, for a future rollup consumer and EventBridge pipe."
   value       = aws_dynamodb_table.main.stream_arn
 }

@@ -79,9 +79,8 @@ jobs:
         working-directory: services/api
         run: npm ci
 
-      # Expects services/api/package.json to define these four scripts once
-      # the Lambda handlers land (PR-21 onward): format:check, lint,
-      # typecheck, test.
+      # Expects services/api/package.json to define these four scripts:
+      # format:check, lint, typecheck, test.
       - name: Format check
         if: steps.probe.outputs.present == 'true'
         working-directory: services/api

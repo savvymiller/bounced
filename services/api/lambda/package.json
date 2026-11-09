@@ -2,7 +2,7 @@
   "name": "tapid-api-lambda",
   "private": true,
   "version": "1.0.0",
-  "description": "Demo ingest API for TapID — GET /v1/config, POST /v1/shifts, POST /v1/events. See docs/API.md. Simplified auth (static bearer token) in place of Cognito/App Attest, which require a real enrolled device and are out of scope until the Apple entitlement lands — see docs/DELIVERY_PLAN.md Track D/F.",
+  "description": "Demo ingest API for TapID — GET /v1/config, POST /v1/shifts, POST /v1/events. Simplified static-bearer-token auth, not Cognito/App Attest.",
   "main": "handler.js",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.700.0",

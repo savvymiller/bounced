@@ -111,8 +111,8 @@ resource "aws_iam_role" "github_actions_deploy" {
   max_session_duration = 3600
 }
 
-# Deliberately scoped to the services this project actually uses
-# (ADR-0006), rather than a managed admin policy. Expect to extend this
+# Deliberately scoped to the services this project actually uses, rather
+# than a managed admin policy. Expect to extend this
 # as new modules land (Lambda, API Gateway, EventBridge, AppConfig,
 # Firehose/Glue/Athena) — each addition should be a reviewable diff
 # here, not a blanket grant up front.

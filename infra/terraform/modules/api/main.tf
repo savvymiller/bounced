@@ -1,10 +1,9 @@
 # Demo ingest API: GET /v1/config, POST /v1/shifts, POST /v1/events.
 #
-# This is a deliberately simplified stand-in for docs/API.md's full
-# design (events:batch, device/App Attest auth, Cognito-backed dashboard
-# auth). Those need a real enrolled device and are tracked separately in
-# docs/DELIVERY_PLAN.md (Track D/F); this module exists to give the
-# Flutter client a real backend to talk to in the meantime.
+# Deliberately simplified (static bearer token instead of device/App
+# Attest auth and Cognito-backed dashboard auth, which need a real enrolled
+# device) — this module exists to give the Flutter client a real backend
+# to talk to.
 
 data "archive_file" "lambda" {
   type        = "zip"
