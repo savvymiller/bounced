@@ -7,17 +7,21 @@
 - `Pdf417Rail`: barcode-scan verification rail, replacing the never-built
   Apple Wallet rail (no Apple entitlement needed)
 - Demo AWS backend: API Gateway + Lambda + DynamoDB, deployed to `dev`
-- Repo cleanup + doc simplification (this pass)
+- Repo cleanup + doc simplification
+- Fixed the barcode scanner issuer bug: a real card thought to be from
+  Illinois came back `unsupportedIssuer` — turned out to actually be an
+  Indiana-issued ID (IIN `636037`), which simply wasn't in the curated
+  table yet (not a wrong mapping, a missing one). Diagnosed with a
+  temporary debug log of the raw scanned payload, added `'636037': 'IN'`
+  to `supportedIins`, then removed the debug log again (it would otherwise
+  print barcode PII — name, address, DL number — to the device log on
+  every future unsupported scan).
+- Expanded `supportedIins` to all 50 states + DC + US territories, sourced
+  from AAMVA's published IIN table rather than guessed. Canadian/Mexican
+  issuers are now recognized-but-unsupported (`knownUnsupportedIins`)
+  instead of wholly unknown.
 
 ## Next
-
-**Fix the barcode scanner issuer bug.** A real Illinois license comes back
-`unsupportedIssuer` even though `IL` is already in the curated IIN table in
-`lib/rails/aamva.dart` — the IIN value used for it is probably wrong, or the
-real header differs slightly from what the parser's regexes assume. Add a
-temporary `debugPrint` of the raw scanned payload when `aamva.dart` returns
-`AamvaUnsupportedIssuer`, re-scan, read the real IIN out of the log, and fix
-`supportedIins`. Don't guess a second value blindly like the first one.
 
 **Connect the frontend to the live API.** The backend already exists and
 already defines the contract (`services/api/lambda/handler.js`):
@@ -41,5 +45,4 @@ readLatencyMs, syncedOffline}]}`, bearer-auth'd with a static token.
 ## Stretch (not currently planned)
 
 - Shift-claim screen (PIN entry) wired to the existing `POST /v1/shifts`
-- Broader state coverage in the IIN table
 - Offline queue if the network drops mid-demo

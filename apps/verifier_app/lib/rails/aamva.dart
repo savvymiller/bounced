@@ -44,33 +44,91 @@ final class AamvaMalformed extends AamvaResult {
   const AamvaMalformed();
 }
 
-/// Curated subset of AAMVA Issuer Identification Numbers this demo
-/// supports — the barcode-rail analogue of the README's "~15 jurisdictions"
-/// coverage framing for Apple Wallet. The full IIN list is public (AAMVA
-/// maintains it) and this map can grow without touching anything else in
-/// the rail.
+/// Every US state, DC, and US territory's AAMVA Issuer Identification
+/// Number, from AAMVA's published IIN table
+/// (https://www.aamva.org/identity/issuer-identification-numbers-(iin)).
+/// Deliberately excludes IIN 636027 ("State Dept." — diplomatic IDs, not a
+/// state-issued driver's license/ID).
 const supportedIins = {
-  '636014': 'CA',
-  '636001': 'NY',
-  '636015': 'TX',
-  '636010': 'FL',
-  '636025': 'PA',
-  '636023': 'OH',
-  '636045': 'WA',
-  '636032': 'MI',
+  '636033': 'AL',
+  '636059': 'AK',
+  '604427': 'AS', // American Samoa
   '636026': 'AZ',
+  '636021': 'AR',
+  '636014': 'CA',
   '636020': 'CO',
-  '636002': 'MA',
-  '636036': 'NJ',
-  '636000': 'VA',
-  '636035': 'IL',
+  '636006': 'CT',
+  '636011': 'DE',
+  '636043': 'DC',
+  '636010': 'FL',
   '636055': 'GA',
+  '636019': 'GU', // Guam
+  '636047': 'HI',
+  '636050': 'ID',
+  '636035': 'IL',
+  '636037': 'IN',
+  '636018': 'IA',
+  '636022': 'KS',
+  '636046': 'KY',
+  '636007': 'LA',
+  '636041': 'ME',
+  '636003': 'MD',
+  '636002': 'MA',
+  '636032': 'MI',
+  '636038': 'MN',
+  '636051': 'MS',
+  '636030': 'MO',
+  '636008': 'MT',
+  '604430': 'MP', // Northern Mariana Islands
+  '636054': 'NE',
+  '636049': 'NV',
+  '636039': 'NH',
+  '636036': 'NJ',
+  '636009': 'NM',
+  '636001': 'NY',
+  '636004': 'NC',
+  '636034': 'ND',
+  '636023': 'OH',
+  '636058': 'OK',
+  '636029': 'OR',
+  '636025': 'PA',
+  '604431': 'PR', // Puerto Rico
+  '636052': 'RI',
+  '636005': 'SC',
+  '636042': 'SD',
+  '636053': 'TN',
+  '636015': 'TX',
+  '636040': 'UT',
+  '636024': 'VT',
+  '636000': 'VA',
+  '636062': 'VI', // US Virgin Islands
+  '636045': 'WA',
+  '636061': 'WV',
+  '636031': 'WI',
+  '636060': 'WY',
 };
 
-/// IINs recognized but intentionally left out of [supportedIins], so an
-/// `unsupportedIssuer` outcome can still report a real-looking jurisdiction
-/// instead of an unresolvable one.
-const knownUnsupportedIins = {'636060': 'WY'};
+/// Non-US AAMVA jurisdictions (Canadian provinces/territories, Mexican
+/// states) — real, recognized issuers, deliberately out of scope for this
+/// US-focused demo. Lets an `unsupportedIssuer` outcome still report a
+/// real jurisdiction instead of an unresolvable one, for a card from one
+/// of these.
+const knownUnsupportedIins = {
+  '604426': 'PE', // Prince Edward Island
+  '604428': 'QC', // Quebec
+  '604429': 'YT', // Yukon
+  '604432': 'AB', // Alberta
+  '604433': 'NU', // Nunavut
+  '636012': 'ON', // Ontario
+  '636013': 'NS', // Nova Scotia
+  '636016': 'NF', // Newfoundland
+  '636017': 'NB', // New Brunswick
+  '636028': 'BC', // British Columbia
+  '636044': 'SK', // Saskatchewan
+  '636048': 'MB', // Manitoba
+  '636056': 'CU', // Coahuila, Mexico
+  '636057': 'HL', // Hidalgo, Mexico
+};
 
 final _iinPattern = RegExp(r'ANSI\s*(\d{6})');
 final _dobPattern = RegExp(r'DBB(\d{8})');

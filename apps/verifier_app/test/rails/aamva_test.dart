@@ -39,11 +39,21 @@ void main() {
     test('an IIN outside the supported set is unsupportedIssuer, with the '
         'jurisdiction filled in when it happens to be a known one', () {
       final result = parseAamva(
-        _rawFor(iin: '636060', dob: '01011990', expiration: '01012030'),
+        _rawFor(iin: '636012', dob: '01011990', expiration: '01012030'),
       );
 
       expect(result, isA<AamvaUnsupportedIssuer>());
-      expect((result as AamvaUnsupportedIssuer).jurisdiction, 'WY');
+      expect((result as AamvaUnsupportedIssuer).jurisdiction, 'ON');
+    });
+
+    test('recognizes every curated known-unsupported IIN', () {
+      for (final entry in knownUnsupportedIins.entries) {
+        final result = parseAamva(
+          _rawFor(iin: entry.key, dob: '01011990', expiration: '01012030'),
+        );
+        expect(result, isA<AamvaUnsupportedIssuer>(), reason: entry.value);
+        expect((result as AamvaUnsupportedIssuer).jurisdiction, entry.value);
+      }
     });
 
     test('a wholly unknown IIN is unsupportedIssuer with no jurisdiction', () {
