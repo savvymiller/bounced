@@ -16,6 +16,10 @@
   to `supportedIins`, then removed the debug log again (it would otherwise
   print barcode PII — name, address, DL number — to the device log on
   every future unsupported scan).
+- Expanded `supportedIins` to all 50 states + DC + US territories, sourced
+  from AAMVA's published IIN table rather than guessed. Canadian/Mexican
+  issuers are now recognized-but-unsupported (`knownUnsupportedIins`)
+  instead of wholly unknown.
 
 ## Next
 
@@ -41,5 +45,4 @@ readLatencyMs, syncedOffline}]}`, bearer-auth'd with a static token.
 ## Stretch (not currently planned)
 
 - Shift-claim screen (PIN entry) wired to the existing `POST /v1/shifts`
-- Broader state coverage in the IIN table
 - Offline queue if the network drops mid-demo

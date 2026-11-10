@@ -43,7 +43,7 @@ class _Pdf417RailHarness implements VerificationRailTestHarness {
     return switch (scenario.result) {
       RailResult.cancelled => null,
       RailResult.readFailed => 'not a barcode at all',
-      RailResult.unsupportedIssuer => _rawFor(iin: '636060'),
+      RailResult.unsupportedIssuer => _rawFor(iin: '636012'), // Ontario
       RailResult.expired => _rawFor(
         iin: '636014',
         dob: '01011970',

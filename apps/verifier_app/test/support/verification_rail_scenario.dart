@@ -50,7 +50,7 @@ class VerificationRailScenario {
   static const unsupportedIssuer = VerificationRailScenario._(
     result: RailResult.unsupportedIssuer,
     ageAtLeast21: null,
-    issuingJurisdiction: 'WY',
+    issuingJurisdiction: 'ON', // e.g. a real but out-of-scope jurisdiction
     latency: Duration(milliseconds: 900),
   );
 
