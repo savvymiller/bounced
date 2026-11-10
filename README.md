@@ -42,10 +42,9 @@ iOS Simulator doesn't have.
   what an Apple Wallet ID would have provided, this is only as trustworthy
   as the plastic card itself (the same trust level as a bouncer eyeballing
   a card today, not a regression below it).
-- Only a curated subset of ~15 states' barcode issuer codes (IINs) are
+- Only a curated subset of ~16 states' barcode issuer codes (IINs) are
   recognized (`lib/rails/aamva.dart`); anything else comes back
-  `unsupportedIssuer`. There's a known mismatch for Illinois — see
-  `ROADMAP.md`.
+  `unsupportedIssuer`.
 - No shift-claim/staff-login screen yet — the backend has a stubbed
   PIN-roster endpoint for it (`POST /v1/shifts`), unused by the app so far.
 - The app doesn't call the backend yet — see `ROADMAP.md`.
