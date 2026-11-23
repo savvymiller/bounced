@@ -30,6 +30,7 @@ jobs:
         if: steps.probe.outputs.present == 'true'
         with:
           channel: stable
+          flutter-version: 3.47.7
 
       - name: Install dependencies
         if: steps.probe.outputs.present == 'true'
