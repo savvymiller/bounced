@@ -19,6 +19,11 @@ personal demo project, not a production or compliance product.
   `dev` environment already: `GET /v1/config`, `POST /v1/shifts`,
   `POST /v1/events`, bearer-auth'd with a static demo token (not a
   production credential).
+- `lib/api/tapid_api_client.dart` — the client that POSTs each decision to
+  `POST /v1/events`. Fire-and-forget: a dropped connection or backend error
+  never blocks the door screen, it's just logged. Only constructed if the
+  backend's base URL and token are supplied at run time (see below); the
+  app still works as a scan-only demo without them.
 
 ## Running it
 
@@ -32,7 +37,18 @@ iOS Simulator doesn't have.
 3. Plug in an iPhone. Enable Developer Mode on it (Settings → Privacy &
    Security → Developer Mode). If prompted, trust the computer and the new
    developer certificate.
-4. `flutter run -d <device>`
+4. To also report outcomes to the backend, get the live API endpoint and
+   demo token (`terraform output api_endpoint` in
+   `infra/terraform/environments/dev`, and the `demo_api_token` value from
+   wherever it's kept — it's a sensitive Terraform variable, not committed)
+   and run:
+   ```
+   flutter run -d <device> \
+     --dart-define=API_BASE_URL=<api_endpoint> \
+     --dart-define=API_BEARER_TOKEN=<demo_api_token>
+   ```
+   Without those two `--dart-define`s, the app runs exactly as before —
+   scanning works, nothing gets reported anywhere.
 5. Tap "Scan ID" and scan the barcode on the back of a US driver's license
    or state ID.
 
@@ -49,6 +65,9 @@ iOS Simulator doesn't have.
   unrecognized IIN comes back `unsupportedIssuer` with no jurisdiction.
 - No shift-claim/staff-login screen yet — the backend has a stubbed
   PIN-roster endpoint for it (`POST /v1/shifts`), unused by the app so far.
-- The app doesn't call the backend yet — see `ROADMAP.md`.
+  Every event reported to the backend is attributed to a fixed placeholder
+  shift ID (`sft_demo`) instead.
+- Reporting to the backend is fire-and-forget, not a real offline-outbox —
+  if a POST fails, it's logged and dropped, not retried or queued.
 
 See [`ROADMAP.md`](ROADMAP.md) for what's done and what's next.

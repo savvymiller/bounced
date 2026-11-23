@@ -20,27 +20,19 @@
   from AAMVA's published IIN table rather than guessed. Canadian/Mexican
   issuers are now recognized-but-unsupported (`knownUnsupportedIins`)
   instead of wholly unknown.
+- Connected the frontend to the live API: `lib/api/tapid_api_client.dart`
+  POSTs every captured decision to `POST /v1/events`. Provider-injected the
+  same way `VerificationRail` is (`app_shell.dart`/`main.dart`), nullable —
+  the app runs scan-only if no backend `--dart-define`s are supplied.
+  Fire-and-forget from `door_screen.dart`'s `_captureDecision`: a failure
+  is logged via `AppLogger`, never blocks or surfaces in the UI. Every
+  event uses a fixed placeholder `shiftId` (`sft_demo`) since there's no
+  shift-claim UI yet.
 
 ## Next
 
-**Connect the frontend to the live API.** The backend already exists and
-already defines the contract (`services/api/lambda/handler.js`):
-`POST /v1/events` takes `{events: [{eventId, railResult, ageAtLeast21,
-humanDecision, refusalReason, issuingJurisdiction, occurredAt, shiftId,
-readLatencyMs, syncedOffline}]}`, bearer-auth'd with a static token.
-- Add the `http` package.
-- New `lib/api/tapid_api_client.dart`: a thin client — base URL + bearer
-  token in the constructor, one method `submitEvent(VerificationOutcome,
-  {required HumanDecision decision, RefusalReason? reason})` that POSTs to
-  `/v1/events` with that shape (a placeholder `shiftId`, since there's no
-  shift-claim UI yet).
-- Wire it into `door_screen.dart`'s `_captureDecision`: fire the POST best
-  effort — log failures, don't block the UI. This is a demo, not a real
-  offline-outbox system.
-- Pass the base URL and token via `--dart-define` at `flutter run` time.
-  Never commit them.
-- Provider-inject the client the same way `VerificationRail` is injected
-  today (`app_shell.dart`/`main.dart`).
+Nothing specifically planned — the core demo loop (scan → decide → report)
+is complete end to end. See Stretch below for ideas if picked back up.
 
 ## Stretch (not currently planned)
 

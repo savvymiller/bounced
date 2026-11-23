@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../api/tapid_api_client.dart';
+import '../../common/app_logger.dart';
 import '../../rails/verification_outcome.dart';
 import '../../rails/verification_rail.dart';
 import 'decision_controls.dart';
 import 'door_screen_state.dart';
 import 'human_decision.dart';
 import 'outcome_card.dart';
+
+/// Stand-in for a real shift-claim flow — there's no staff-login screen yet
+/// (`POST /v1/shifts` exists on the backend but nothing in the app calls
+/// it), so every event is attributed to this fixed placeholder.
+const _placeholderShiftId = 'sft_demo';
 
 /// One big button, backed by whatever [VerificationRail] the app shell
 /// injected — `Pdf417Rail` in production, `MockRail` in tests. This screen
@@ -19,6 +26,8 @@ class DoorScreen extends StatefulWidget {
 }
 
 class _DoorScreenState extends State<DoorScreen> {
+  static const _log = AppLogger('door_screen');
+
   DoorScreenState _state = const Idle();
 
   Future<void> _beginVerification() async {
@@ -47,6 +56,34 @@ class _DoorScreenState extends State<DoorScreen> {
         refusalReason: reason,
       ),
     );
+    _reportDecision(outcome, decision, reason);
+  }
+
+  /// Best-effort: a dropped connection or backend error never blocks the
+  /// door screen, which has already moved on by the time this resolves.
+  /// Not the real offline-outbox story — just enough to prove outcomes
+  /// reach the backend in a demo. No-ops entirely if no [TapidApiClient]
+  /// was configured (see `main.dart`).
+  Future<void> _reportDecision(
+    VerificationOutcome outcome,
+    HumanDecision decision,
+    RefusalReason? reason,
+  ) async {
+    final client = context.read<TapidApiClient?>();
+    if (client == null) return;
+
+    final accepted = await client.submitEvent(
+      outcome,
+      decision: decision,
+      reason: reason,
+      shiftId: _placeholderShiftId,
+    );
+    if (!accepted) {
+      _log.warn(
+        'event submission failed',
+        fields: {'eventId': outcome.eventId},
+      );
+    }
   }
 
   void _reset() => setState(() => _state = const Idle());
